@@ -1,8 +1,6 @@
 package com.mythicchaos.utils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBManager {
     private static Connection connection;
