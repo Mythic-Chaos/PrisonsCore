@@ -1,0 +1,3 @@
+prefix: "&c&lPrefix &8&l» &f"
+receivedMoneyFromServer: "You have received &7$%amount%&f!"
+moneyTakenByServer: "&7$%amount% &fhas been taken from your account!"
