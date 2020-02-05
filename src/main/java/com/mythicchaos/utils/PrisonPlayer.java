@@ -11,4 +11,6 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
         super((CraftServer) player.getServer(), ((CraftPlayer) player).getHandle());
     }
 
+    //test
+
 }
