@@ -19,7 +19,7 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
     /**
      * @param message -> The message you want to send the player, can have colour codes
      *                -> Overrides default method and adds the prefix before the message
-     *                -> Automatically translates colour codes so no need for ChatColor
+     *                -> Automatically translates colour codes so no need for ChatColor 
      */
     @Override
     public void sendMessage(String message){
