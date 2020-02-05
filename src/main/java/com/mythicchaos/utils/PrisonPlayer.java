@@ -10,7 +10,4 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
     public PrisonPlayer(Player player){
         super((CraftServer) player.getServer(), ((CraftPlayer) player).getHandle());
     }
-
-    //test branch?
-
 }
