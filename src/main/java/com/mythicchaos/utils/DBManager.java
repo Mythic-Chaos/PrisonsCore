@@ -1,6 +1,7 @@
 package com.mythicchaos.utils;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,12 +9,13 @@ public class DBManager {
     private static Connection connection;
     public static PreparedStatement preparedStatement;
     private static Statement statement;
-    private static final String host = "multicraft.pandaserv.net", database = "test", username = "1197", password = "8c9b7bba37";
+    private static final String host = "multicraft.pandaserv.net", database = "1197", username = "1197", password = "8c9b7bba37";
     private static final int port = 3306;
     private static ResultSet results;
     private static List<UUID> validPlayers;
 
     public static void openConnection() {
+        validPlayers = new ArrayList<>();
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
             statement = connection.createStatement();
@@ -24,9 +26,8 @@ public class DBManager {
         }
 
         try {
-            results = statement.executeQuery("SELECT * FROM " + database);
-            System.out.println("Pulled all data from database!");
-
+            results = statement.executeQuery("SELECT * FROM player_data");
+            System.out.println("Pulled all data from the player_data table!");
             while(results.next()){
                 validPlayers.add(UUID.fromString(results.getString("UUID")));
             }
