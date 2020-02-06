@@ -114,4 +114,11 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
         return false;
     }
 
+    public boolean inDatabase(){
+        if(DBManager.inDatabase(this)){
+            return true;
+        }
+        return false;
+    }
+
 }
