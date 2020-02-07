@@ -1,0 +1,11 @@
+name: MythicPrisons
+main: com.mythicchaos.MythicChaos
+version: 1.0
+author: MythicChaos Devs
+depend: [Vault]
+description: Core plugin for the prison server of MythicChaos
+
+commands:
+  drachma:
+    usage: /<command>
+    description: Command for Drachma
