@@ -1,6 +1,7 @@
 package com.mythicchaos.economy;
 
 import com.mythicchaos.utils.DBManager;
+import com.mythicchaos.utils.Language;
 import com.mythicchaos.utils.PrisonPlayer;
 
 import java.sql.SQLException;
@@ -8,15 +9,15 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Economy {
-    private static HashMap<UUID, Integer> balance;
+    private static HashMap<UUID, Integer> drachma;
 
     public void startUp() {
-        balance = new HashMap<>();
+        drachma = new HashMap<>();
         try {
             while (DBManager.getResults().next()) {
-                balance.put(UUID.fromString(DBManager.getResults().getString("UUID")), DBManager.getResults().getInt("Balance"));
+                drachma.put(UUID.fromString(DBManager.getResults().getString("UUID")), DBManager.getResults().getInt("Drachma"));
             }
-            System.out.println("Loaded " + balance.size() + " balance(s) from the database!");
+            System.out.println("Loaded " + drachma.size() + " balance(s) from the database!");
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -26,15 +27,15 @@ public class Economy {
         String sql = "UPDATE player_data SET Balance = ? WHERE UUID = ?";
         try {
             DBManager.preparedStatement = DBManager.getConnection().prepareStatement(sql);
-            for (UUID player : balance.keySet()) {
-                DBManager.preparedStatement.setInt(1, balance.get(player));
+            for (UUID player : drachma.keySet()) {
+                DBManager.preparedStatement.setInt(1, drachma.get(player));
                 DBManager.preparedStatement.setString(2, player.toString());
             }
-            System.out.println("Successfully updated " + balance.size() + " balances!");
+            System.out.println("Successfully updated " + drachma.size() + " balances!");
         } catch (SQLException e){
             e.printStackTrace();
         }
-        balance.clear();
+        drachma.clear();
     }
 
     /**
@@ -51,22 +52,36 @@ public class Economy {
      **/
 
     public static int getBalance(PrisonPlayer player){
-        return -1;
+        if(drachma != null && drachma.containsKey(player.getUniqueId())){
+            return drachma.get(player.getUniqueId());
+        }
+        return 0;
     }
 
     public static void giveBalance(PrisonPlayer player, int amount){
-
+        amount += getBalance(player);
+        setBalance(player, amount);
+        player.sendMessage(Language.getMessage("receivedDrachma").replaceAll("%amount%", String.valueOf(amount)));
     }
 
     public static void setBalance(PrisonPlayer player, int amount){
-
+        drachma.remove(player.getUniqueId());
+        drachma.put(player.getUniqueId(), amount);
     }
 
     public static boolean takeBalance(PrisonPlayer player, int amount){
+        if(hasBalance(player, amount)){
+            setBalance(player, getBalance(player) -  amount);
+            player.sendMessage(Language.getMessage("lostDrachma").replaceAll("%amount%", String.valueOf(amount)));
+            return true;
+        }
         return false;
     }
 
     public static boolean hasBalance(PrisonPlayer player, int amount){
+        if(getBalance(player) >= amount){
+            return true;
+        }
         return false;
     }
 
