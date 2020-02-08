@@ -9,3 +9,6 @@ commands:
   drachma:
     usage: /<command>
     description: Command for Drachma
+  balance:
+    usage: /<command>
+    aliases: [bal, ebal, ebalance, money, emoney]

@@ -5,6 +5,7 @@ import com.mythicchaos.economy.Economy;
 import com.mythicchaos.utils.DBManager;
 import com.mythicchaos.utils.Language;
 import com.mythicchaos.utils.VaultHook;
+import com.mythicchaos.utils.commands.Balance;
 import com.mythicchaos.utils.listeners.OnJoin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +33,7 @@ public class MythicChaos extends JavaPlugin {
 
         // Register Commands
         getCommand("drachma").setExecutor(new EcoCommand());
+        getCommand("balance").setExecutor(new Balance());
 
         // Register Events
         getServer().getPluginManager().registerEvents(new OnJoin(), this);

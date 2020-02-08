@@ -17,8 +17,8 @@ public class EcoCommand implements CommandExecutor {
                 PrisonPlayer player = new PrisonPlayer((Player) sender);
                 if(player.hasPermission("drachma.admin")){
                     if(args.length == 3) {
-                        PrisonPlayer target = new PrisonPlayer(Bukkit.getPlayer(args[1]));
-                        if(target != null && target.isOnline()) {
+                        if(Bukkit.getPlayer(args[1]) != null && Bukkit.getPlayer(args[1]).isOnline()) {
+                            PrisonPlayer target = new PrisonPlayer(Bukkit.getPlayer(args[1]));
                             if (args[0].equalsIgnoreCase("give")) {
                                 if (isInt(args[2])) {
                                     Economy.giveBalance(target, Integer.parseInt(args[2]));

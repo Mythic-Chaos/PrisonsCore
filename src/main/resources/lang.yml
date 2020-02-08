@@ -8,6 +8,8 @@ invalidTarget: "&cThe player specified is invalid!"
 # Economy Messages
 receivedMoneyFromServer: "You have received &7$%amount%&f!"
 moneyTakenByServer: "&7$%amount% &fhas been taken from your account!"
+yourBalance: "You currently have $%dollars% and %drachma% Drachma."
+othersBalance: "%target% current has $%dollars% and %drachma% Drachma."
 
 # Error Messages
 couldNotCreatePlayer: "&cSorry, something went wrong and we couldn't add you to the database. Please contact a member of staff!"
