@@ -1,9 +1,11 @@
 package com.mythicchaos.economy;
 
+import com.mythicchaos.MythicChaos;
 import com.mythicchaos.utils.DBManager;
-import com.mythicchaos.utils.Language;
 import com.mythicchaos.utils.PrisonPlayer;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
@@ -14,8 +16,9 @@ public class Economy {
     public void startUp() {
         drachma = new HashMap<>();
         try {
-            while (DBManager.getResults().next()) {
-                drachma.put(UUID.fromString(DBManager.getResults().getString("UUID")), DBManager.getResults().getInt("Drachma"));
+            ResultSet results = DBManager.getStatament().executeQuery("SELECT UUID, Drachma FROM player_data");
+            while (results.next()) {
+                drachma.put(UUID.fromString(results.getString("UUID")), results.getInt("Drachma"));
             }
             System.out.println("Loaded " + drachma.size() + " balance(s) from the database!");
         } catch (SQLException e){
@@ -24,12 +27,13 @@ public class Economy {
     }
 
     public void shutDown() {
-        String sql = "UPDATE player_data SET Balance = ? WHERE UUID = ?";
+        String sql = "UPDATE player_data SET Drachma = ? WHERE UUID = ?";
         try {
-            DBManager.preparedStatement = DBManager.getConnection().prepareStatement(sql);
+            PreparedStatement statement = DBManager.getConnection().prepareStatement(sql);
             for (UUID player : drachma.keySet()) {
-                DBManager.preparedStatement.setInt(1, drachma.get(player));
-                DBManager.preparedStatement.setString(2, player.toString());
+                statement.setInt(1, drachma.get(player));
+                statement.setString(2, player.toString());
+                statement.executeUpdate();
             }
             System.out.println("Successfully updated " + drachma.size() + " balances!");
         } catch (SQLException e){
@@ -61,7 +65,7 @@ public class Economy {
     public static void giveBalance(PrisonPlayer player, int amount){
         amount += getBalance(player);
         setBalance(player, amount);
-        player.sendMessage(Language.getMessage("receivedDrachma").replaceAll("%amount%", String.valueOf(amount)));
+        player.sendMessage(MythicChaos.getLanguage().getMessage("receivedDrachma").replaceAll("%amount%", String.valueOf(amount)));
     }
 
     public static void setBalance(PrisonPlayer player, int amount){
@@ -72,7 +76,7 @@ public class Economy {
     public static boolean takeBalance(PrisonPlayer player, int amount){
         if(hasBalance(player, amount)){
             setBalance(player, getBalance(player) -  amount);
-            player.sendMessage(Language.getMessage("lostDrachma").replaceAll("%amount%", String.valueOf(amount)));
+            player.sendMessage(MythicChaos.getLanguage().getMessage("lostDrachma").replaceAll("%amount%", String.valueOf(amount)));
             return true;
         }
         return false;

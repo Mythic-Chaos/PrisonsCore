@@ -6,37 +6,43 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 
 public class Language {
-    private MythicChaos plugin;
     private File file;
-    private static FileConfiguration configuration;
+    private FileConfiguration configuration;
+    private MythicChaos plugin;
+    private HashMap<String, String> messages;
 
-    public Language(MythicChaos plugin){
+    public Language(MythicChaos plugin) {
         this.plugin = plugin;
     }
 
-    public void load(){
-        file = new File(plugin.getDataFolder() + "language.yml");
-        if(!file.exists()){
-            plugin.saveResource("language.yml", false);
+    public void loadUp() {
+        file = new File(plugin.getDataFolder() + File.separator + "lang.yml");
+        if (!file.exists()) {
+            plugin.saveResource("lang.yml", false);
         }
         configuration = YamlConfiguration.loadConfiguration(file);
-        System.out.println("Successfully Loaded: language.yml");
-    }
 
-    public void save(){
-        try {
-            configuration.save(file);
-        } catch (IOException e){
-            e.printStackTrace();
+        int amount = 0;
+        messages = new HashMap<>();
+        for(String identifier : configuration.getConfigurationSection("").getKeys(false)){
+            amount++;
+            messages.put(identifier, configuration.getString(identifier));
         }
+        System.out.println("Successfully Loaded " + amount + " messages from lang.yml");
     }
 
-    // Returns any string with translated colour codes
-    public static String getMessage(String path){
-        return ChatColor.translateAlternateColorCodes('&', configuration.getString(path));
+    public String getMessage(String identifier){
+        if(messages != null && messages.containsKey(identifier)){
+            return ChatColor.translateAlternateColorCodes('&', messages.get(identifier));
+        }
+        return ChatColor.translateAlternateColorCodes('&',"&C&lThat is an invalid string identifier!");
+    }
+
+    public void shutDown(){
+        messages.clear();
     }
 
 }

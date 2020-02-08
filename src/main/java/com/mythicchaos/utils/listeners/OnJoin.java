@@ -10,7 +10,7 @@ public class OnJoin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
-        PrisonPlayer player = (PrisonPlayer) event.getPlayer();
+        PrisonPlayer player = new PrisonPlayer(event.getPlayer());
         if(!DBManager.inDatabase(player)){
             DBManager.createPlayer(player);
         }
