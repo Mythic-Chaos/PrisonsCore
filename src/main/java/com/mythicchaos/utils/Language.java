@@ -12,7 +12,7 @@ public class Language {
     private File file;
     private FileConfiguration configuration;
     private MythicChaos plugin;
-    private HashMap<String, String> messages;
+    private static HashMap<String, String> messages;
 
     public Language(MythicChaos plugin) {
         this.plugin = plugin;
@@ -34,7 +34,7 @@ public class Language {
         System.out.println("Successfully Loaded " + amount + " messages from lang.yml");
     }
 
-    public String getMessage(String identifier){
+    public static String getMessage(String identifier){
         if(messages != null && messages.containsKey(identifier)){
             return ChatColor.translateAlternateColorCodes('&', messages.get(identifier));
         }

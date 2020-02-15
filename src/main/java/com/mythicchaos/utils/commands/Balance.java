@@ -2,6 +2,7 @@ package com.mythicchaos.utils.commands;
 
 import com.mythicchaos.MythicChaos;
 import com.mythicchaos.economy.Economy;
+import com.mythicchaos.utils.Language;
 import com.mythicchaos.utils.PrisonPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,20 +18,20 @@ public class Balance implements CommandExecutor {
             if(cmd.getName().equalsIgnoreCase("balance")){
                 PrisonPlayer player = new PrisonPlayer((Player) sender);
                 if(args.length == 0){
-                    player.sendMessage(MythicChaos.getLanguage().getMessage("yourBalance")
+                    player.sendMessage(Language.getMessage("yourBalance")
                             .replaceAll("%dollars%", String.valueOf(player.getMoney()))
                             .replaceAll("%drachma%", String.valueOf(Economy.getBalance(player))));
                 } else if(args.length == 1){
                     if(Bukkit.getPlayer(args[0]) != null) {
                         PrisonPlayer target = new PrisonPlayer(Bukkit.getPlayer(args[0]));
-                        player.sendMessage(MythicChaos.getLanguage().getMessage("othersBalance")
+                        player.sendMessage(Language.getMessage("othersBalance")
                                 .replaceAll("%dollars%", String.valueOf(target.getMoney()))
                                 .replaceAll("%drachma%", String.valueOf(Economy.getBalance(target))));
                     } else {
-                        player.sendMessage(MythicChaos.getLanguage().getMessage("invalidTarget"));
+                        player.sendMessage(Language.getMessage("invalidTarget"));
                     }
                 } else {
-                    player.sendMessage(MythicChaos.getLanguage().getMessage("invalidArguments"));
+                    player.sendMessage(Language.getMessage("invalidArguments"));
                 }
             }
         }

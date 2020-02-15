@@ -1,6 +1,5 @@
 package com.mythicchaos.utils;
 
-import com.mythicchaos.MythicChaos;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R2.CraftServer;
@@ -24,7 +23,7 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
      */
     @Override
     public void sendMessage(String message){
-        super.sendMessage(MythicChaos.getLanguage().getMessage("prefix") + ChatColor.translateAlternateColorCodes('&', message));
+        super.sendMessage(Language.getMessage("prefix") + ChatColor.translateAlternateColorCodes('&', message));
     }
 
     public double getMoney(){
@@ -33,12 +32,12 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
 
     public void giveMoney(double amount){
         VaultHook.getEconomy().depositPlayer(this, amount);
-        sendMessage(MythicChaos.getLanguage().getMessage("receivedMoneyFromServer").replaceAll("%amount%", String.valueOf(amount)));
+        sendMessage(Language.getMessage("receivedMoneyFromServer").replaceAll("%amount%", String.valueOf(amount)));
     }
 
     public void giveMoney(int amount){
         VaultHook.getEconomy().depositPlayer(this, amount);
-        sendMessage(MythicChaos.getLanguage().getMessage("receivedMoneyFromServer").replaceAll("%amount%", String.valueOf(amount)));
+        sendMessage(Language.getMessage("receivedMoneyFromServer").replaceAll("%amount%", String.valueOf(amount)));
     }
 
     public boolean hasMoney(double amount){
@@ -59,7 +58,7 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
         if(hasMoney(amount)){
             EconomyResponse response = VaultHook.getEconomy().withdrawPlayer(this, amount);
             if(response.transactionSuccess()){
-                sendMessage(MythicChaos.getLanguage().getMessage("moneyTakenByServer").replaceAll("%amount%", String.valueOf(amount)));
+                sendMessage(Language.getMessage("moneyTakenByServer").replaceAll("%amount%", String.valueOf(amount)));
                 return true;
             }
         }
@@ -70,7 +69,7 @@ public class PrisonPlayer extends CraftPlayer implements Listener {
         if(hasMoney(amount)){
             EconomyResponse response = VaultHook.getEconomy().withdrawPlayer(this, amount);
             if(response.transactionSuccess()){
-                sendMessage(MythicChaos.getLanguage().getMessage("moneyTakenByServer").replaceAll("%amount%", String.valueOf(amount)));
+                sendMessage(Language.getMessage("moneyTakenByServer").replaceAll("%amount%", String.valueOf(amount)));
                 return true;
             }
         }

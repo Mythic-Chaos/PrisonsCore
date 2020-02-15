@@ -13,10 +13,8 @@ public class MythicChaos extends JavaPlugin {
     private VaultHook vaultHook;
     private Economy economy;
     private static Language language;
-    private static MythicChaos instance;
 
     public void onEnable(){
-        instance = this;
         DBManager.openConnection();
 
         //Hook into vault and start services
@@ -47,9 +45,4 @@ public class MythicChaos extends JavaPlugin {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> DBManager.closeConnection()));
     }
-
-    public static Language getLanguage(){
-        return language;
-    }
-
 }

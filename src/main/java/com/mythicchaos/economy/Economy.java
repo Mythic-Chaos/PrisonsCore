@@ -2,6 +2,7 @@ package com.mythicchaos.economy;
 
 import com.mythicchaos.MythicChaos;
 import com.mythicchaos.utils.DBManager;
+import com.mythicchaos.utils.Language;
 import com.mythicchaos.utils.PrisonPlayer;
 
 import java.sql.PreparedStatement;
@@ -65,7 +66,7 @@ public class Economy {
     public static void giveBalance(PrisonPlayer player, int amount){
         amount += getBalance(player);
         setBalance(player, amount);
-        player.sendMessage(MythicChaos.getLanguage().getMessage("receivedDrachma").replaceAll("%amount%", String.valueOf(amount)));
+        player.sendMessage(Language.getMessage("receivedDrachma").replaceAll("%amount%", String.valueOf(amount)));
     }
 
     public static void setBalance(PrisonPlayer player, int amount){
@@ -76,7 +77,7 @@ public class Economy {
     public static boolean takeBalance(PrisonPlayer player, int amount){
         if(hasBalance(player, amount)){
             setBalance(player, getBalance(player) -  amount);
-            player.sendMessage(MythicChaos.getLanguage().getMessage("lostDrachma").replaceAll("%amount%", String.valueOf(amount)));
+            player.sendMessage(Language.getMessage("lostDrachma").replaceAll("%amount%", String.valueOf(amount)));
             return true;
         }
         return false;
