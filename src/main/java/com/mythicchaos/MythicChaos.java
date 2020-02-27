@@ -4,9 +4,13 @@ import com.mythicchaos.economy.EcoCommand;
 import com.mythicchaos.economy.Economy;
 import com.mythicchaos.utils.DBManager;
 import com.mythicchaos.utils.Language;
+import com.mythicchaos.utils.PickaxeLevel;
 import com.mythicchaos.utils.VaultHook;
 import com.mythicchaos.utils.commands.Balance;
+import com.mythicchaos.utils.commands.PickaxeTest;
 import com.mythicchaos.utils.listeners.OnJoin;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MythicChaos extends JavaPlugin {
@@ -24,6 +28,7 @@ public class MythicChaos extends JavaPlugin {
         //Load the language file into memory
         language = new Language(this);
         language.loadUp();
+        PickaxeLevel.loadUp();
 
         //Load and startup economy
         economy = new Economy();
@@ -32,13 +37,14 @@ public class MythicChaos extends JavaPlugin {
         // Register Commands
         getCommand("drachma").setExecutor(new EcoCommand());
         getCommand("balance").setExecutor(new Balance());
+        getCommand("pickaxetest").setExecutor(new PickaxeTest());
 
         // Register Events
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
 
     }
 
-    public void onDisable(){
+    public void onDisable() {
         // Put all closing/clean up methods before connection close
         economy.shutDown();
         language.shutDown();

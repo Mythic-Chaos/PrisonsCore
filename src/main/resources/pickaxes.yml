@@ -1,0 +1,32 @@
+Level-1:
+  type: WOOD
+  maxXP: 100
+  maxLevel: 5
+  displayName: '&7Level: &c%level%'
+  lore:
+    - '&cXP: %currentxp%/%maxxp%'
+    - '&cProgress: %%progress%'
+  canMine:
+    - 'stone'
+    - 'coal_ore'
+Level-2:
+  type: GOLD
+  maxXP: 200
+  maxLevel: 3
+  displayName: '&7Level: &6%level%'
+  lore:
+    - '&6XP: %currentxp%/%maxxp%'
+    - '&6Progress: %%progress%'
+  canMine:
+    - 'stone'
+    - 'coal_ore'
+
+
+
+Blocks:
+  gold_ore: 1
+  obsidian: 0.75
+  emerald_ore: 0.50
+  diamond_ore: 0.25
+  stone: 0.05
+  coal_ore: 0.1

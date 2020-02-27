@@ -6,6 +6,9 @@ depend: [Vault]
 description: Core plugin for the prison server of MythicChaos
 
 commands:
+  pickaxetest:
+    usage: /<command>
+    description: Gives me(PerryPlaysMC) the testing pickaxe
   drachma:
     usage: /<command>
     description: Command for Drachma
