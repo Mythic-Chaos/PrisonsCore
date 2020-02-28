@@ -138,18 +138,8 @@ public class PickaxeLevel {
         return pick;
     }
 
-    ItemStack item;
-    int level;
-    double currentXP = 0;
-    Player player;
-
-    public PickaxeLevel(Player player, ItemStack item) {
-        this.player = player;
-        this.item = item;
-        this.level = getLevel(item);
-    }
-
-    public boolean canBreak(Block block) {
+    public static boolean canBreak(ItemStack item, Block block) {
+        int level = getLevel(item);
         ConfigurationSection blocks = configuration.getConfigurationSection("Level-" + level);
         for(String s : blocks.getStringList("canMine"))
             if(s.toLowerCase().equalsIgnoreCase(block.getType().name().toLowerCase())) return true;
@@ -157,7 +147,7 @@ public class PickaxeLevel {
     }
 
 
-    public boolean blockExists(Block block) {
+    public static boolean blockExists(Block block) {
         ConfigurationSection blocks = configuration.getConfigurationSection("Blocks");
         for(String s : blocks.getKeys(false)) {
             if(Material.matchMaterial(s) == null || !Material.matchMaterial(s).isBlock()) {
@@ -169,7 +159,7 @@ public class PickaxeLevel {
         return false;
     }
 
-    public double getXP(Block block) {
+    public static double getXP(Block block) {
         ConfigurationSection blocks = configuration.getConfigurationSection("Blocks");
         for(String s : blocks.getKeys(false)) {
             if(Material.matchMaterial(s) == null || !Material.matchMaterial(s).isBlock()) {
@@ -181,7 +171,10 @@ public class PickaxeLevel {
         return -1;
     }
 
-    public void forceXP(double forceXP) {
+    public static void forceXP(Player player, double forceXP) {
+        if(!isPickaxe(player.getItemInHand())) return;
+        ItemStack item = player.getItemInHand();
+        int level = getLevel(item);
         ConfigurationSection sec = configuration.getConfigurationSection("Level-" + level);
         ItemStack pick = player.getItemInHand();
         ItemMeta im = pick.getItemMeta();
@@ -222,9 +215,12 @@ public class PickaxeLevel {
         player.setItemInHand(pick);
     }
 
-    public boolean breakBlockCancelled(Block block) {
+    public static boolean breakBlockCancelled(Player player, Block block) {
+        if(!isPickaxe(player.getItemInHand())) return true;
+        ItemStack item = player.getItemInHand();
+        int level = getLevel(item);
         ConfigurationSection blocks = configuration.getConfigurationSection("Blocks");
-        if(!blockExists(block) || getXP(block) == -1 || !canBreak(block)) return true;
+        if(!blockExists(block) || getXP(block) == -1 || !canBreak(item, block)) return true;
         ConfigurationSection sec = configuration.getConfigurationSection("Level-" + level);
 
         ItemStack pick = player.getItemInHand();
