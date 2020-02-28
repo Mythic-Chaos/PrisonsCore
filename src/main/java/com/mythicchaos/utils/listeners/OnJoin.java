@@ -1,7 +1,7 @@
 package com.mythicchaos.utils.listeners;
 
 import com.mythicchaos.utils.DBManager;
-import com.mythicchaos.utils.PickaxeLevel;
+import com.mythicchaos.levelling.PickaxeLevel;
 import com.mythicchaos.utils.PrisonPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -23,17 +23,15 @@ public class OnJoin implements Listener {
 
     @EventHandler void onBreak(BlockBreakEvent e) {
         Player player = (e.getPlayer());
-        PickaxeLevel p = new PickaxeLevel(player, player.getItemInHand());
         if(PickaxeLevel.isPickaxe(e.getPlayer().getItemInHand()))
-            e.setCancelled(p.breakBlockCancelled(e.getBlock()));
+            e.setCancelled(PickaxeLevel.handleBlockBreak(player, e.getBlock()));
     }
 
     @EventHandler void onBlockDamage(BlockDamageEvent e) {
         Player player = (e.getPlayer());
-        PickaxeLevel p = new PickaxeLevel(player, player.getItemInHand());
         Block block = e.getBlock();
         if(PickaxeLevel.isPickaxe(e.getPlayer().getItemInHand()))
-            if(!p.blockExists(block) || p.getXP(block) == -1 || !p.canBreak(block))
+            if(!PickaxeLevel.validateBlock(block) || PickaxeLevel.getBlockXP(block) == -1 || !PickaxeLevel.canMine(player.getItemInHand(), block))
                 e.setCancelled(true);
     }
 

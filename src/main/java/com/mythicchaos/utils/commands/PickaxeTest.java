@@ -1,7 +1,6 @@
 package com.mythicchaos.utils.commands;
 
-import com.mythicchaos.utils.PickaxeLevel;
-import org.bukkit.Bukkit;
+import com.mythicchaos.levelling.PickaxeLevel;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,13 +29,12 @@ public class PickaxeTest implements CommandExecutor {
             Player p = (Player) s;
             if(args.length == 1) {
                 if(PickaxeLevel.isPickaxe(p.getItemInHand())) {
-                    PickaxeLevel level = new PickaxeLevel(p, p.getItemInHand());
-                    level.forceXP(Double.parseDouble(args[0]));
+                    PickaxeLevel.forceGiveXP(p, Double.parseDouble(args[0]));
                     s.sendMessage("Updated");
                 }
                 return true;
             }
-            p.getInventory().addItem(PickaxeLevel.getLevel(1));
+            p.getInventory().addItem(PickaxeLevel.createPickaxe(1));
             s.sendMessage("Item obtained");
         }
         return true;
